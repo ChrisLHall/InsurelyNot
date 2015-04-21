@@ -177,7 +177,7 @@ body {
 	letter-spacing: 0.1em;
 	left: 15px;
 	line-height: 47px;
-	margin: 0;
+	margin: 0 0 50px;
 	padding: 0 25px;
 	position: absolute;
 	text-transform: capitalize;
@@ -326,14 +326,19 @@ body {
 	width: 31px;
 }
 #body div .section div p {
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 20px;
 	margin: 0 10px;
-	padding: 20px 0px;
+	padding: 5px 0px;
 	text-align: left;
 }
 
-#body div .section  div .center {
+#body .section  div .center {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#body .section  div .bigcenter {
     text-align: center;
     font-size: 2em;
     margin: 0 auto;

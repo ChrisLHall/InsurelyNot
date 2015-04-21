@@ -23,20 +23,23 @@
                     <p class="center">
                         <img src="images/char_pixelly.png" />
                     </p>
-                    <p class="center">Jeff Jefferson</p>
+                    <p class="bigcenter"><b><span id="charName">Jeff Jefferson</span></b></p>
+                    <p class="center"><span id="dateText">April 1, 1987</span></p>
                 </div>
             </div>
             <div class="section">
                 <div>
-                    <h2>Cash Flow</h2>
+                    <h2>Annual Cash Flow</h2>
                     <h3>Income</h3>
-                    <section id="spouse">
-                    <p>Albatross</p>
-                    </section>
-                    <h3>My Kids</h3>
-                    <section id="kids">
-                    <p>Kennifer</p>
-                    <p>Danjamin</p>
+                    <p><b>$<span id="income">44,000</span></b> after tax</p>
+                    <h3>Costs</h3>
+                    <p><b>-$<span id="rentCost">30,000</span></b> to rent/mortgage and car</p>
+                    <p><b>-$<span id="insuranceCost">5,000</span></b> to insurance premiums</p>
+                    <h3>Savings</h3>
+                    <p><b>$<span id="savingsAmount">4,500</span></b> (50% of remainder) to savings</p>
+                    <p><b><span id="savingsApr">3</span>%</b> per year growth</p>
+                    <p></p>
+                    <p class="bigcenter"><b>= $<span id="savingsTotal">100,000</span></b> total savings</p>
                     </section>
                 </div>
             </div>
@@ -53,7 +56,7 @@
             <div class="section" id="chooseAmountDiv">
                 <div>
                     <p id="chooseAmountDesc">How much money will you donate to create a "remember grandma forever" fund that gives scholarships to low-income communities?</p>
-                    <form>
+                    <form id="chooseAmountForm">
                     <h2>Choose</h2>
                     <h3>Choose an amount</h3>
                     <p><input type="textbox" class="inputText" id="chooseAmount"/></p>
@@ -61,13 +64,35 @@
                     </form>
                 </div>
             </div>
+            <div class="section" id="chooseOptionDiv">
+                <div>
+                    <p id="chooseOptionDesc">How would you like to kill the reindeer that ran over Grandma for revenge?</p>
+                    <form id="chooseOptionForm">
+                    <h2>Choose</h2>
+                    <h3>Choose an option</h3>
+                    <section id="chooseOptionButtons">
+                    <p><input type="button" class="inputButton" id="chooseAmountButton0" value="Knives"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton1" value="Guns"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton2" value="A Sweet Freeze Ray"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton3" value="I am not a killer!"/></p>
+                    </section>
+                    </form>
+                </div>
+            </div>
+            <div class="section" id="noChoiceDiv">
+                <div>
+                    <h2>Choose</h2>
+                    <p>There are no choices to make this year.</p>
+                    <form id="chooseOptionForm">
+                    <p><input type="button" class="inputButton" id="chooseAmountButton3" value="Proceed"/></p>
+                    </section>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 	<div id="footer">
 		<div>
-			<div class="connect">
-				<a href="http://www.freewebsitetemplates.com/preview/hairstylesalon/index.html" id="twitter">Original Template</a>
-			</div>
 			<p>
 				&copy;2015 William Wu and Christopher Hall, all rights reserved. <a href="http://www.freewebsitetemplates.com/preview/hairstylesalon/index.html">Original Template</a>
 			</p>
