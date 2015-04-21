@@ -224,11 +224,11 @@ body {
 
 #body .left {
     float: left;
-    width: 400px;
+    width: 300px;
 }
 #body .right {
-    margin-left: 420px;
-    width: 400px;
+    margin-left: 320px;
+    width: 550px;
 }
 
 .both {
@@ -236,7 +236,7 @@ body {
 }
 
 #body div .section {
-    width: 95%;
+    width: 90%;
     margin-bottom: 15px;
 }
 #body div .section div {
@@ -346,6 +346,31 @@ body {
     margin: 10px !important;
 	border: 3px solid #000000;
 	border-radius: 2px;
+}
+
+.section table {
+    width: 90%;
+    text-align: left;
+    margin: 10px;
+    border-collapse: collapse;
+	border: 1px solid #666666;
+}
+
+.section td {
+	border: 1px solid #666666;
+    padding: 5px;
+}
+
+.section td .name {
+    width: 20%;
+}
+
+.section td .payout {
+    width: 10%;
+}
+
+.section td .suspicion {
+    width: 10%;
 }
 
 #body .blog {
