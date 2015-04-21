@@ -3,111 +3,98 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>ZiZurz Website Template</title>
+	<title>Get My Money Right - The Game</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
 	<div id="header">
 		<div class="section">
 			<div class="logo">
-				<a href="index.html">zizurz</a>
+				<a href="index.html">Get my money right</a>
 			</div>
-			<ul>
-				<li class="selected">
-					<a href="index.html">home</a>
-				</li>
-				<li>
-					<a href="about.html">about</a>
-				</li>
-				<li>
-					<a href="hairstyle.html">hairstyles</a>
-				</li>
-				<li>
-					<a href="news.html">news</a>
-				</li>
-				<li>
-					<a href="contact.html">contact</a>
-				</li>
-			</ul>
-		</div>
-		<div class="article">
-			<img src="images/great-hairstyle.jpg" alt="">
-			<h1>Great hairstyle comes from the experts.</h1>
 		</div>
 	</div>
 	<div id="body">
-		<ul>
-			<li>
-				<a href="hairstyle.html"><img src="images/hairstyle17.jpg" alt=""></a>
-				<b>best hairstylists</b>
-				<p>
-					Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free!
-				</p>
-			</li>
-			<li>
-				<a href="hairstyle.html"><img src="images/hairstyle18.jpg" alt=""></a>
-				<b>featured hairstyle</b>
-				<p>
-					Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free!
-				</p>
-			</li>
-			<li>
-				<a href="hairstyle.html"><img src="images/hairstyle19.jpg" alt=""></a>
-				<b>hair care</b>
-				<p>
-					Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free!
-				</p>
-			</li>
-			<li>
-				<a href="hairstyle.html"><img src="images/hairstyle20.jpg" alt=""></a>
-				<b>we "hair" you</b>
-				<p>
-					Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free!
-				</p>
-			</li>
-		</ul>
-		<div>
-			<div class="featured">
-				<h2>featured</h2>
-				<img src="images/featured.jpg" alt="">
-				<h3>Hair, I just meet you</h3>
-				<p>
-					Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free! You can do a lot with them. You can modify them. You can use them to design websites for clients, so long as you agree with the Terms of Use.
-				</p>
-				<p>
-					You can even remove all our links if you want to. Looking for more templates? Just browse through all our Free Website Templates and find what you’re looking for. But if you don’t find any website template you can use, you can try our Free Web Design service and tell us all about it. Maybe you’re looking for something different, something special.
-				</p>
-				<p>
-					And we love the challenge of doing something different and something special. If you’re experiencing issues and concerns about this website template, join the discussion on our forum and meet other people in the community who share the same interests with you. Version 13.
-				</p>
-			</div>
-			<div class="section">
-				<div class="article">
-					<h2>hairstyle</h2>
-					<p>
-						This website template has been designed by <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free. You can replace all this text with your own text. You can remove any link to our website from this website template, you're free to use this website template without linking back to us. If you're having problems editing this website template, then don't hesitate to ask for help on the <a href="http://www.freewebsitetemplates.com/forums/">Forums</a>.
-					</p>
-					<a href="#">Mike M.</a>
-				</div>
-				<div class="newsletter">
-					<img src="images/skinhead.png" alt="">
-					<p>
-						Are you losing your hair? Let us help you in bringing back your confidence. <span>Call Us at 1800-0000-0000</span>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="left">
+            <div class="section">
+                <div class="article">
+                    <h2>You!</h2>
+                    <p class="center">
+                        <img src="images/char_pixelly.png" />
+                    </p>
+                    <p class="bigcenter"><b><span id="charName">Jeff Jefferson</span></b></p>
+                    <p class="center"><span id="dateText">April 1, 1987</span></p>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <h2>Annual Cash Flow</h2>
+                    <h3>Income</h3>
+                    <p><b>$<span id="income">44,000</span></b> after tax</p>
+                    <h3>Costs</h3>
+                    <p><b>-$<span id="rentCost">30,000</span></b> to rent/mortgage and car</p>
+                    <p><b>-$<span id="insuranceCost">5,000</span></b> to insurance premiums</p>
+                    <h3>Savings</h3>
+                    <p><b>$<span id="savingsAmount">4,500</span></b> (50% of remainder) to savings</p>
+                    <p><b><span id="savingsApr">3</span>%</b> per year growth</p>
+                    <p></p>
+                    <p class="bigcenter"><b>= $<span id="savingsTotal">100,000</span></b> total savings</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="section">
+                <div class="article">
+                    <h2>The Event</h2>
+                    <h3 id="eventName" class="center">Grandma got ran over</h3>
+                    <p class="center"><img src="images/char_pixelly.png" /></p>
+                    <p>Grandma was run over by a raindeer and took 80000 damage. She did not leave an inheritance because she did not like you very much at all.</p>
+                </div>
+            </div>
+            <div class="section" id="chooseAmountDiv">
+                <div>
+                    <p id="chooseAmountDesc">How much money will you donate to create a "remember grandma forever" fund that gives scholarships to low-income communities?</p>
+                    <form id="chooseAmountForm">
+                    <h2>Choose</h2>
+                    <h3>Choose an amount</h3>
+                    <p><input type="textbox" class="inputText" id="chooseAmount"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton" value="Decide"/></p>
+                    </form>
+                </div>
+            </div>
+            <div class="section" id="chooseOptionDiv">
+                <div>
+                    <p id="chooseOptionDesc">How would you like to kill the reindeer that ran over Grandma for revenge?</p>
+                    <form id="chooseOptionForm">
+                    <h2>Choose</h2>
+                    <h3>Choose an option</h3>
+                    <section id="chooseOptionButtons">
+                    <p><input type="button" class="inputButton" id="chooseAmountButton0" value="Knives"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton1" value="Guns"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton2" value="A Sweet Freeze Ray"/></p>
+                    <p><input type="button" class="inputButton" id="chooseAmountButton3" value="I am not a killer!"/></p>
+                    </section>
+                    </form>
+                </div>
+            </div>
+            <div class="section" id="noChoiceDiv">
+                <div>
+                    <h2>Choose</h2>
+                    <p>There are no choices to make this year.</p>
+                    <form id="chooseOptionForm">
+                    <p><input type="button" class="inputButton" id="chooseAmountButton3" value="Proceed"/></p>
+                    </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 	<div id="footer">
 		<div>
-			<div class="connect">
-				<a href="http://freewebsitetemplates.com/go/twitter/" id="twitter">twitter</a>
-				<a href="http://freewebsitetemplates.com/go/facebook/" id="facebook">facebook</a>
-				<a href="http://freewebsitetemplates.com/go/googleplus/" id="googleplus">googleplus</a>
-				<a href="http://pinterest.com/fwtemplates/" id="pinterest">pinterest</a>
-			</div>
 			<p>
-				&copy; copyright 2023 | all rights reserved.
+				&copy;2015 William Wu and Christopher Hall, all rights reserved. <a href="http://www.freewebsitetemplates.com/preview/hairstylesalon/index.html">Original Template</a>
 			</p>
 		</div>
 	</div>
