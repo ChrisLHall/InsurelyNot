@@ -31,11 +31,6 @@ function Events()
         {
             return;
         }
-
-        this.choices = function(game)
-        {
-            return [];
-        }
     }
 
     this.Death = function()
@@ -47,11 +42,6 @@ function Events()
         this.result = function(game)   
         {
             game.done = true;
-        }
-
-        this.choices = function(game)
-        {
-            return [];
         }
     }
 
@@ -65,11 +55,6 @@ function Events()
         {
             var random = Math.random();
             game.health -= Math.round(random * 25.0);
-        }
-
-        this.choices = function(game)
-        {
-            return [];
         }
     }
 
@@ -101,11 +86,6 @@ function Events()
         {
 
         }
-
-        this.choices = function(game)
-        {
-
-        }
     }
 
     this.Recession = function()
@@ -119,11 +99,6 @@ function Events()
             var random = Math.random();
             this.inctax = Math.min(0.5 * random + this.inctax, 1.0)
         }
-
-        this.choices = function(game)
-        {
-            return [];
-        }
     }
 
     this.Prosperity = function()
@@ -136,11 +111,6 @@ function Events()
         {
             var random = Math.random();
             this.inctax = Math.max(this.inctax - 0.2 * random, 0.0)
-        }
-
-        this.choices = function(game)
-        {
-            return [];
         }
     }
 
@@ -158,11 +128,6 @@ function Events()
             var bonus = game.salary / 10.0;
             game.savings += bonus;
         }
-
-        this.choices = function(game)
-        {
-
-        }
     }
 
     this.Divorce = function()
@@ -176,25 +141,15 @@ function Events()
             game.savings *= 0.5;
             game.inctax = Math.max(1.0, game.inctax + 0.01);
         }
-
-        this.choices = function(game)
-        {
-            return [];
-        }
     }
 
     this.Accident = function()
     {
         this.title = "Accident";
-        this.description = "While driving down a lonely road deep in the forests, your eyes slowly flickered as sleep deprivation took over. A deer came out of nowhere and your reflexes were fast enough to avoid the deer, but you swerved off the road, slamMath.ming into a tree. Did you spend 15 Math.minutes on saving 15% or more on car insurance?";
+        this.description = "While driving down a lonely road deep in the forests, your eyes slowly flickered as sleep deprivation took over. A deer came out of nowhere and your reflexes were fast enough to avoid the deer, but you swerved off the road, slamming into a tree. Did you spend 15 minutes on saving 15% or more on car insurance?";
         this.probability = 0.05;
 
         this.result = function(game)
-        {
-
-        }
-
-        this.choices = function(game)
         {
 
         }
@@ -216,9 +171,57 @@ function Decisions()
 
     }
 
+    this.BuyHealthInsurance = function(game)
+    {
+
+    }
+
     this.BuyLifeInsurance = function(game)
     {
 
+    }
+
+    this.BuyStocks = function(game)
+    {
+
+    }
+
+    this.BuyBonds = function(game)
+    {
+
+    }
+
+    this.BuyMutualFunds = function(game)
+    {
+
+    }
+
+    this.SellStocks = function(game)
+    {
+
+    }
+
+    this.SellBonds = function(game)
+    {
+
+    }
+
+    this.SellMutualFunds = function(game)
+    {
+
+    }
+
+    this.ObtainEducation = function(game)
+    {
+        this.savings -= 120000.0;
+        this.savings -= 4.0 * this.salary;
+
+        this.salary = Math.random() * 100000.0;
+    }
+
+    this.WorkStartup = function(game)
+    {
+        
     }
 }
 
@@ -233,16 +236,19 @@ function Game()
     this.image = "image";
 
     var Event = new Events();
+    var Decision = new Decisions();
 
-    this.decisions = [];
+    this.choices = [];
     this.events = [new Event.Nothing(), new Event.Death(), new Event.Illness(), new Event.Injury(), new Event.Recession(), new Event.Prosperity(), new Event.Divorce()];
 
     this.savings = 0.0;
     this.health = 100.0;
     this.salary = 0.0;
+    this.interest = 0.01;
     this.inctax = 0.25;
 
     this.insurance = {};
+    this.mortgage = 2000.0
 
     this.done = false; // whether the game is finished
 
@@ -259,7 +265,7 @@ function Game()
     this.random_event = function()
     {
         var random = Math.random();
-        var incident, object;
+        var incident;
         var probability = 0.0;
         for (var i = 0; i < this.events.length; i++)
         {
@@ -274,21 +280,22 @@ function Game()
         return null;
     }
 
-
     this.make_decision = function(decision)
     {
-        decision.result(this)
+        decision.result(this);
     }
 
-    this.list_choices = function(incident)
+    this.list_choices = function()
     {
-        return incident.choices(this);
+        return this.choices;
     }
 
     this.apply_effects = function()
     {
         this.savings += (1.0 - this.inctax) * this.salary;
-        this.health -= 1.0;
+        this.savings *= (1.0 + this.interest);
+        this.health -= 0.5;
+
 
         for (key in Object.keys(this.insurance))
         {
@@ -328,7 +335,7 @@ console.log(evnt);
 
 /* list choices after event has occurred */
 
-// chces = Game.list_choices(evnt)
+// chces = Game.list_choices()
 
 
 /* make a decision from one of the choices */
