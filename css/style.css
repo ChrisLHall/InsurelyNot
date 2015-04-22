@@ -240,7 +240,6 @@ body {
     margin-bottom: 15px;
 }
 #body div .section div {
-	background: #ededed;
 	float: none;
 	margin: 0;
 	padding: 40px 15px 5px;
@@ -279,7 +278,7 @@ body {
 	text-align: right;
 
     width: 100%;
-    height: 250px;
+    height: 300px;
 }
 #body div .section .article h2 {
 	text-align: left;
@@ -340,7 +339,7 @@ body {
 }
 .order {
     float: left;
-    background-color: #cc9999 !important;
+    background-color: #cc9999;
     padding: 5px !important;
     width: 85%;
     margin: 10px !important;

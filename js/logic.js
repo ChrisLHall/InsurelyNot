@@ -21,6 +21,8 @@ return game results
 
 var print = console.log
 
+var TARGET_DURATION = 40;
+
 var Events =
 {
     Nothing: function()
@@ -235,6 +237,7 @@ function Game(gameLoop)
     this.gameLoop = gameLoop;
     this.year = 0;
     this.counter = 0;
+    this.spawnCount = TARGET_DURATION - 1;
 
     this.totalPayout = 0;
 
@@ -440,24 +443,39 @@ Game.prototype.update = function ()
     for (var i = 0; i < this.targets.length; i++)
     {
         var target = this.targets[i];
-        this.targets.expiration--;
-        if (this.targets.expiration <= 0)
+        target.expiration--;
+        if (target.expiration <= 0)
         {
-            this.targets.expiration = 0;
-            gameloop.hideTarget(target[i]);
+            target.expiration = 0;
+            gameloop.hideTarget(target);
         }
     }
 
-    // Every 20 * 100 ms = 2 sec, create a new target;
-    if (this.counter % 20 == 0) {
+    this.spawnCount++;
+    if (this.spawnCount == TARGET_DURATION) {
         var newTarget = this.generateChar();
-        this.instantiateHtml(newTarget);
+        this.instantiate(newTarget);
+        this.targets.push(newTarget);
+        this.spawnCount = 0;
     }
 };
 
-Game.prototype.instantiateHtml = function (target) {
-    target.instance = gameloop.createTarget(target);
+Game.prototype.instantiate = function (target) {
+    target.htmlInst = gameloop.createTarget(target, this.accept.bind(this, target), this.reject.bind(this, target));
     target.payoff = this.evaluate(target);
+};
+
+Game.prototype.accept = function (target) {
+    gameloop.hideTarget(target);
+    // TODO add to completed orders
+    // Reset counter
+    this.spawnCount = TARGET_DURATION - 1;
+};
+
+Game.prototype.reject = function (target) {
+    gameloop.hideTarget(target);
+    // Reset counter
+    this.spawnCount = TARGET_DURATION - 1;
 };
 
 var Target =
@@ -473,7 +491,7 @@ var Target =
         this.income = 500 * Math.round(Math.random() * 100); // E(X) = 25000
         this.dependents = Math.round(Math.random()); // E(X) = 0.5
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -488,7 +506,7 @@ var Target =
         this.income = 300 * Math.round(Math.random() * 100);
         this.dependents = Math.round(Math.random() * 4);
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -503,7 +521,7 @@ var Target =
         this.income = 50 * Math.round(Math.random() * 100);
         this.dependents = Math.round(Math.random() * 1);
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -518,7 +536,7 @@ var Target =
         this.income = 200000
         this.dependents = 5
 
-        this.expiration = 100
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -533,7 +551,7 @@ var Target =
         this.income = 1000 * Math.round(Math.random() * 100);
         this.dependents = Math.round(6 * Math.random());
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -548,7 +566,7 @@ var Target =
         this.income = 0.0;
         this.dependents = Math.round(4 * Math.random());
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     },
 
@@ -563,7 +581,7 @@ var Target =
         this.income = 10 * Math.round(Math.random() * 100);
         this.dependents = Math.round(0.5 * Math.random());
 
-        this.expiration = 100;
+        this.expiration = TARGET_DURATION;
         this.probability = 0.1;
     }
 };
