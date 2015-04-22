@@ -247,6 +247,8 @@ function Game()
     this.insurance = {};
     this.mortgage = 2000.0
 
+    this.characters = [new Character(), new Character()];
+
     this.done = false; // whether the game is finished
 }
 
@@ -302,9 +304,9 @@ Game.prototype.apply_effects = function()
     }
 };
 
-var Character = function (template) {
+var Character = function (startTime, template) {
     this.name = "Grandma";
-    /** Time left in seconds. */
+    this.startTime = startTime;
     this.description = "Your favorite harmless old lady.";
     this.timeLeft = 100;
     this.age = 95;
