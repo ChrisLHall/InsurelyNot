@@ -424,19 +424,21 @@ Game.prototype.update = function ()
         if (this.targets.expiration <= 0)
         {
             this.targets.expiration = 0;
-            gameloop.hideTarget(target[i]);
+            gameloop.hideTarget(target.htmlInst);
         }
+        gameloop.updateTarget(target);
     }
 
     // Every 20 * 100 ms = 2 sec, create a new target;
     if (this.counter % 20 == 0) {
         var newTarget = this.generateChar();
-        this.instantiateHtml(newTarget);
+        this.instantiate(newTarget);
+        this.targets.push(newTarget);
     }
 };
 
-Game.prototype.instantiateHtml = function (target) {
-    target.instance = gameloop.createTarget(target);
+Game.prototype.instantiate = function (target) {
+    target.htmlInst = gameloop.createTarget(target);
     target.payoff = this.evaluate(target);
 };
 
