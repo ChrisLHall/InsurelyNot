@@ -350,12 +350,70 @@ Game.prototype.evaluate = function(target)
     {
         return 0;
     }
+    var adjusted = 0.0;
+    var bracket, best;
+    var inctax = 
+    [
+        {
+            lower: 0, 
+            upper: 9075,
+            tax: 0.1
+        },
+        {
+            lower: 9075, 
+            upper: 36900,
+            tax: 0.15
+        },
+        {
+            lower: 36900,
+            upper: 89350,
+            tax: 0.25
+        },
+        {
+            lower: 89350,
+            upper: 186350,
+            tax: 0.28
+        },
+        {
+            lower: 186350,
+            upper: 405100,
+            tax: 0.33
+        },
+        {
+            lower: 405100,
+            upper: 406750,
+            tax: 0.35
+        },
+        {
+            lower: 406750,
+            upper: 1000000000,
+            tax: 0.39
+        }
+    ];
+    for (var i = 0; i < inctax.length; i++)
+    {
+        bracket = inctax[i];
+        if (target.income >= bracket["lower"] && target.income <= bracket["upper"])
+        {
+            best = i;
+            break;
+        }
+    }
 
+    for (var i = 0; i < best; i++)
+    {
+        adjusted += inctax[i]["upper"] * inctax[i]["tax"];
+    }
+    adjusted += (inctax[best]["upper"] - target.income) * inctax[best]["tax"]
+    adjusted += 25000 * target.dependents;
+    adjusted = Math.max(adjusted * (60 - target.age), 0.0); // how long you need the insurance
+
+    return adjusted;
 };
 
 Game.prototype.payoff = function(target)
 {
-    return target.income
+    return target.income;
 };
 
 
@@ -511,8 +569,8 @@ var Target =
 
 // print(new Target.OldLady());
  // This now done in gameloop.js
-// Game = new Game();
-
+Game = new Game();
+Game.evaluate(new Target.DrugUser());
 
 // console.log(Game)
 
