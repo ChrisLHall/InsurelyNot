@@ -302,6 +302,16 @@ Game.prototype.apply_effects = function()
     }
 };
 
+var Character = function (template) {
+    this.name = "Grandma";
+    /** Time left in seconds. */
+    this.description = "Your favorite harmless old lady.";
+    this.timeLeft = 100;
+    this.age = 95;
+    this.income = 88000;
+    this.dependents = 0;
+};
+
 /* // This now done in gameloop.js
 Game = new Game();
 
