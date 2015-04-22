@@ -486,7 +486,7 @@ Game.prototype.update = function () {
 // print(new Target.OldLady());
  // This now done in gameloop.js
 Game = new Game();
-
+print("Hello World");
 
 
 // console.log(Game)
