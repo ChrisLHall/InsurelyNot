@@ -74,8 +74,7 @@ GameLoop.prototype.createPayoutRow = function (target) {
 
     result.css("display", this.rowTemplateDisp);
     result.find("#name").html(target.name);
-    var payout = this.game.evaluate(target);
-    result.find("#payout").html(payout);
+    result.find("#payout").html(target.payout);
     result.find("#suspicion").html(target.age);
     result.find("#comment").html("Hmm I don't really have anything to say about this.");
 

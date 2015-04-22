@@ -443,12 +443,13 @@ Game.prototype.update = function ()
 
 Game.prototype.instantiate = function (target) {
     target.htmlInst = gameloop.createTarget(target, this.accept.bind(this, target), this.reject.bind(this, target));
-    target.payoff = this.evaluate(target);
+    target.payout = this.evaluate(target);
 };
 
 Game.prototype.accept = function (target) {
     gameloop.hideTarget(target);
-    // TODO add to completed orders
+    gameloop.createPayoutRow(target);
+    this.totalPayout += target.payout;
     // Reset counter
     this.spawnCount = TARGET_DURATION - 1;
 };
@@ -566,41 +567,3 @@ var Target =
         this.probability = 0.1;
     }
 };
-
-// print(new Target.OldLady());
- // This now done in gameloop.js
-Game = new Game();
-Game.evaluate(new Target.DrugUser());
-
-// console.log(Game)
-
-
-
-/* to check if game is over */
-
-// if (Game.check_done == true)
-// {
-//    /*** YOUR CODE HERE ***/
-// }
-
-
-/* make a random event happen */
-
-// evnt = Game.random_event()
-
-
-/* list choices after event has occurred */
-
-// chces = Game.list_choices()
-
-
-/* make a decision from one of the choices */
-
-// index = 0
-// chce = chces[index]
-// dcsn = Game.make_decision(chce)
-
-
-/* apply residual/recurring effects */
-
-// Game.apply_effects()
