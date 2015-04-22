@@ -100,9 +100,9 @@ GameLoop.prototype.createPayoutRow = function (target) {
     result.css("display", this.rowTemplateDisp);
     var tds = result.find("td");
     tds.eq(0).html(target.name);
-    result.find("#payout").html(target.payout);
-    result.find("#suspicion").html(target.age);
-    result.find("#comment").html("Hmm I don't really have anything to say about this.");
+    tds.eq(1).html("$" + target.payout.toFixed(2));
+    tds.eq(2).html((target.suspicion * 100).toFixed(1) + "%");
+    tds.eq(3).html("Hmm I don't really have anything to say about this.");
 
     $("#rowContainer").append(result);
     return result;
