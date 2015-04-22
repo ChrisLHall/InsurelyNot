@@ -38,7 +38,22 @@ GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
     spans.eq(0).html(template.name);
     spans.eq(1).html("" + (template.expiration / 10).toFixed(1) + "s");
     spans.eq(2).html(template.description);
-    spans.eq(3).html("")
+
+    var string;
+    if (template.suspicion < 0.1)
+    {
+        string = "Nobody cares about this target. Just kill them already.";
+    }
+    else if (template.suspicion > 0.3)
+    {
+        string = "Meh. You could get away it. Wanna take a chance?";
+    }
+    else
+    {
+        string = "There's a high chance you'll be caught if you try killing this target.";
+    }
+
+    spans.eq(3).html(string);
     spans.eq(4).html(template.age);
     spans.eq(5).html(template.income);
     spans.eq(6).html(template.dependents);

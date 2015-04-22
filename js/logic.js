@@ -407,7 +407,12 @@ Game.prototype.evaluate = function(target)
     adjusted += (inctax[best]["upper"] - target.income) * inctax[best]["tax"]
     adjusted += 25000 * target.dependents;
     adjusted = Math.max(adjusted * (60 - target.age), 0.0); // how long you need the insurance
+    adjusted = adjusted * 0.5;
 
+    if (Math.random() < 0.5)
+    {
+        return 0.0;
+    }
     return adjusted;
 };
 
