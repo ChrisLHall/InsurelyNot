@@ -19,6 +19,8 @@ return game results
 
 */
 
+var print = console.log
+
 var Events =
 {
     Nothing: function()
@@ -235,92 +237,242 @@ function Game()
     this.player = "name";
     this.image = "image";
 
-    this.choices = [];
-    this.events = [new Events.Nothing(), new Events.Death(), new Events.Illness(), new Events.Injury(), new Events.Recession(), new Events.Prosperity(), new Events.Divorce()];
+    // this.choices = [];
+    // this.events = [new Events.Nothing(), new Events.Death(), new Events.Illness(), new Events.Injury(), new Events.Recession(), new Events.Prosperity(), new Events.Divorce()];
 
-    this.savings = 0.0;
-    this.health = 100.0;
-    this.salary = 0.0;
-    this.interest = 0.01;
-    this.inctax = 0.25;
+    // this.savings = 0.0;
+    // this.health = 100.0;
+    // this.salary = 0.0;
+    // this.interest = 0.01;
+    // this.inctax = 0.25;
 
-    this.insurance = {};
-    this.mortgage = 2000.0
+    // this.insurance = {};
+    // this.mortgage = 2000.0
 
-    this.characters = [new Character(), new Character()];
+    this.insurance = [];
+
+    this.targets = [];
+
+    this.characters = [new Target.OldLady(), new Target.DrugUser(), new Target.Student(), new Target.RichPerson(), new Target.PoliceOfficer(), new Target.Unemployed(), new Target.HomelessPerson()];
+
+    for (var i = 0; i < this.characters.length; i++)
+    {
+        var character = this.characters[i];
+        for (var k = 0; k < character.probability * 50; k++)
+        {
+            var target;
+            switch (i)
+            {
+                case 0:
+                    target = new Target.OldLady();
+                    break;
+                case 1:
+                    target = new Target.DrugUser();
+                    break;
+                case 2:
+                    target = new Target.Student();
+                    break;
+                case 3:
+                    target = new Target.RichPerson();
+                    break;
+                case 4:
+                    target = new Target.PoliceOfficer();
+                    break;
+                case 5:
+                    target = new Target.Unemployed();
+                    break;
+                case 6:
+                    target = new Target.HomelessPerson();
+                    break;
+            }
+            this.targets.push(target)
+        }
+    }
 
     this.done = false; // whether the game is finished
 }
 
 
 
-Game.prototype.check_done = function()
+
+// Game.prototype.check_done = function()
+// {
+//     if (this.done == true || this.health <= 0)
+//     {
+//         return true;
+//     }
+//     return false;
+// };
+
+// Game.prototype.random_event = function()
+// {
+//     var random = Math.random();
+//     var incident;
+//     var probability = 0.0;
+//     for (var i = 0; i < this.events.length; i++)
+//     {
+//         incident = this.events[i];
+//         probability += incident.probability;
+//         if (random < probability)
+//         {
+//             incident.result(this);
+//             return incident;
+//         }
+//     }
+//     return null;
+// };
+
+// Game.prototype.make_decision = function(decision)
+// {
+//     decision.result(this);
+// };
+
+// Game.prototype.list_choices = function()
+// {
+//     return this.choices;
+// };
+
+// Game.prototype.apply_effects = function()
+// {
+//     this.savings += (1.0 - this.inctax) * this.salary;
+//     this.savings *= (1.0 + this.interest);
+//     this.health -= 0.5;
+
+
+//     for (key in Object.keys(this.insurance))
+//     {
+//         this.savings -= this.insurance[key];
+//     }
+// };
+
+Game.prototype.evaluate = function(target)
 {
-    if (this.done == true || this.health <= 0)
+    if (target.dependents == 0 || target.age >= 80)
     {
-        return true;
+        return 0;
     }
-    return false;
-};
 
-Game.prototype.random_event = function()
+}
+
+Game.prototype.payoff = function(target)
 {
-    var random = Math.random();
-    var incident;
-    var probability = 0.0;
-    for (var i = 0; i < this.events.length; i++)
+    return target.income
+}
+
+
+var Target =
+{
+    OldLady: function()
     {
-        incident = this.events[i];
-        probability += incident.probability;
-        if (random < probability)
-        {
-            incident.result(this);
-            return incident;
-        }
-    }
-    return null;
-};
+        this.name = "OldLady";
+        this.description = "Your favorite harmless old lady.";
+        this.age = 50 + Math.round(Math.random() * 50); // E(X) = 75
+        this.health = Math.min(1.0, 2.0 * 0.6 * Math.random());
 
-Game.prototype.make_decision = function(decision)
-{
-    decision.result(this);
-};
+        this.value = 5000 * Math.round(Math.random() * 100); // E(X) = 250000
+        this.income = 500 * Math.round(Math.random() * 100); // E(X) = 25000
+        this.dependents = Math.round(Math.random()); // E(X) = 0.5
 
-Game.prototype.list_choices = function()
-{
-    return this.choices;
-};
+        this.expiration = 100;
+        this.probability = 0.1;
+    },
 
-Game.prototype.apply_effects = function()
-{
-    this.savings += (1.0 - this.inctax) * this.salary;
-    this.savings *= (1.0 + this.interest);
-    this.health -= 0.5;
-
-
-    for (key in Object.keys(this.insurance))
+    DrugUser: function()
     {
-        this.savings -= this.insurance[key];
+        this.name = "DrugUser";
+        this.description = "The typical town junkie, has unsanitary and unhealthy habits.";
+        this.age = 20 + Math.round(Math.random() * 20);
+        this.health = Math.min(1.0, 2.0 * 0.2 * Math.random());
+
+        this.value = 300 * Math.round(Math.random() * 100);
+        this.income = 300 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(Math.random() * 4);
+
+        this.expiration = 100;
+        this.probability = 0.1;
+    },
+
+    Student: function()
+    {
+        this.name = "Student";
+        this.description = "A university student, trying to get some college by going to knowledge.";
+        this.age = 18 + Math.round(Math.random() * 5)
+        this.health = Math.min(1.0, 2.0 * 0.9 * Math.random());
+
+        this.value = 50 * Math.round(Math.random() * 100);
+        this.income = 50 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(Math.random() * 1);
+
+        this.expiration = 100;
+        this.probability = 0.1;
+    },
+
+    RichPerson: function()
+    {
+        // this.name = 
+        // this.description = 
+        // this.age = 
+        // this.health = 
+
+        // this.value = 
+        // this.income = 
+        // this.dependents = 
+
+        // this.expiration = 
+        this.probability = 0.1;
+    },
+
+    PoliceOfficer: function()
+    {
+        // this.name = 
+        // this.description = 
+        // this.age = 
+        // this.health = 
+
+        // this.value = 
+        // this.income = 
+        // this.dependents = 
+
+        // this.expiration = 
+        this.probability = 0.1;
+    },
+
+    Unemployed: function()
+    {
+        this.name = "Unemployed";
+        this.description = "Someone without a job, who currently is looking";
+        this.age = 20 + Math.round(50 * Math.random());
+        this.health = Math.min(1.0, 2.0 * 0.4 * Math.random());
+
+        this.value = 100 * Math.round(Math.random() * 100);
+        this.income = 0.0;
+        this.dependents = Math.round(4 * Math.random());
+
+        this.expiration = 100;
+        this.probability = 0.1;
+    },
+
+    HomelessPerson: function()
+    {
+        // this.name = 
+        // this.description = 
+        // this.age = 
+        // this.health = 
+
+        // this.value = 
+        // this.income = 
+        // this.dependents = 
+
+        // this.expiration = 
+        this.probability = 0.1;
     }
 };
 
-var Character = function (startTime, template) {
-    this.name = "Grandma";
-    this.startTime = startTime;
-    this.description = "Your favorite harmless old lady.";
-    this.timeLeft = 100;
-    this.age = 95;
-    this.income = 88000;
-    this.dependents = 0;
-};
-
-/* // This now done in gameloop.js
+// print(new Target.OldLady());
+ // This now done in gameloop.js
 Game = new Game();
 
-evnt = Game.random_event();
 
-console.log(evnt);
-*/
 
 // console.log(Game)
 
