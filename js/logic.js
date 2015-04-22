@@ -228,9 +228,13 @@ var Decisions =
 
 
 
-function Game()
+function Game(gameLoop)
 {
+    this.gameLoop = gameLoop;
     this.year = 0;
+    this.counter = 0;
+
+    this.totalPayout = 0;
 
     this.player = "name";
     this.image = "image";
@@ -248,6 +252,8 @@ function Game()
     this.mortgage = 2000.0
 
     this.characters = [new Character(), new Character()];
+    // goes to 100
+    this.suspicion = 0;
 
     this.done = false; // whether the game is finished
 }
@@ -302,6 +308,10 @@ Game.prototype.apply_effects = function()
     {
         this.savings -= this.insurance[key];
     }
+};
+
+Game.prototype.update = function () {
+    this.counter++;
 };
 
 var Character = function (startTime, template) {
