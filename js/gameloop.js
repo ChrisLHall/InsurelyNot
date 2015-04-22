@@ -43,11 +43,17 @@ GameLoop.prototype.createTarget = function (template) {
 };
 
 GameLoop.prototype.updateTarget = function (target) {
-    var remaining = target.startTime + target.expiration - this.game.counter;
+    var remaining = target.expiration;
     if (remaining < 0) {
         remaining = 0;
     }
     target.find("#charTime").html(remaining / 10);
+};
+
+GameLoop.prototype.hideTarget = function (target) {
+    if (target.css("display") != "none") {
+        target.css("display", "none");
+    }
 };
 
 /** Use this function after a payout has been chosen. */
@@ -66,7 +72,7 @@ GameLoop.prototype.createPayoutRow = function (target) {
     return result;
 };
 
-var game = new GameLoop();
+var gameloop = new GameLoop();
 
 /*
 this.name = 

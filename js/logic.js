@@ -259,47 +259,36 @@ function Game(gameLoop)
 
     this.characters = [new Target.OldLady(), new Target.DrugUser(), new Target.Student(), new Target.RichPerson(), new Target.PoliceOfficer(), new Target.Unemployed(), new Target.HomelessPerson()];
 
-    for (var i = 0; i < this.characters.length; i++)
-    {
-        var character = this.characters[i];
-        for (var k = 0; k < character.probability * 50; k++)
-        {
-            var target;
-            switch (i)
-            {
-                case 0:
-                    target = new Target.OldLady();
-                    break;
-                case 1:
-                    target = new Target.DrugUser();
-                    break;
-                case 2:
-                    target = new Target.Student();
-                    break;
-                case 3:
-                    target = new Target.RichPerson();
-                    break;
-                case 4:
-                    target = new Target.PoliceOfficer();
-                    break;
-                case 5:
-                    target = new Target.Unemployed();
-                    break;
-                case 6:
-                    target = new Target.HomelessPerson();
-                    break;
-            }
-            this.targets.push(target)
-        }
-    }
-
     // goes to 100
     this.suspicion = 0;
 
     this.done = false; // whether the game is finished
 }
 
-
+Game.prototype.generateChar = function () {
+    var totalProb = 0;
+    for (var i = 0; i < this.characters.length; i++)
+    {
+        totalProb += this.characters[i].probability;
+    }
+    var randomNum = Math.random() * totalProb;
+    var tempTotalProb = 0;
+    for (var k = 0; k < this.characters.length; k++)
+    {
+        var thisChar = this.characters[k];
+        if (tempTotalProb + thisChar.probability > randomNum)
+        {
+            // Instantiate this one
+            var instance = new (Object.getPrototypeOf(thisChar).constructor)();
+            console.log(instance);
+            return instance;
+        } else {
+            // Keep looking
+            tempTotalProb += thisChar.probability;
+        }
+    }
+    return null;
+};
 
 
 // Game.prototype.check_done = function()
@@ -359,13 +348,39 @@ Game.prototype.evaluate = function(target)
         return 0;
     }
 
-}
+};
 
 Game.prototype.payoff = function(target)
 {
     return target.income
-}
+};
 
+
+Game.prototype.update = function ()
+{
+    this.counter++;
+    for (var i = 0; i < this.targets.length; i++)
+    {
+        var target = this.targets[i];
+        this.targets.expiration--;
+        if (this.targets.expiration <= 0)
+        {
+            this.targets.expiration = 0;
+            gameloop.hideTarget(target[i]);
+        }
+    }
+
+    // Every 20 * 100 ms = 2 sec, create a new target;
+    if (this.counter % 20 == 0) {
+        var newTarget = this.generateChar();
+        this.instantiateHtml(newTarget);
+    }
+};
+
+Game.prototype.instantiateHtml = function (target) {
+    target.instance = gameloop.createTarget(target);
+    target.payoff = this.evaluate(target);
+};
 
 var Target =
 {
@@ -475,17 +490,9 @@ var Target =
     }
 };
 
-
-
-Game.prototype.update = function () {
-    this.counter++;
-};
-
-
-
 // print(new Target.OldLady());
  // This now done in gameloop.js
-Game = new Game();
+// Game = new Game();
 
 
 
