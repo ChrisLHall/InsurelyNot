@@ -3,11 +3,9 @@ var GameLoop = function () {
     this.orderTemplate = $("#orderTemplate");
     this.orderTemplateDisp = this.orderTemplate.css("display");
     this.orderTemplate.css("display", "none");
-    console.log(this.orderTemplateDisp);
     this.rowTemplate = $("#templateRow");
     this.rowTemplateDisp = this.rowTemplate.css("display");
     this.rowTemplate.css("display", "none");
-    console.log(this.rowTemplateDisp);
 };
 
 GameLoop.prototype.loop = function () {
@@ -29,7 +27,8 @@ GameLoop.prototype.updateStatus = function () {
         gameOverString = "GAME OVER! ";
     }
     $("#statusString").html(gameOverString + "Time Elapsed: <b>" + (this.game.counter / 10).toFixed(1) + "</b>, Total Payout: <b>$" + this.game.totalPayout.toFixed(2) + "</b>");
-    $("#suspicion").html(this.game.suspicion);
+    var susp = Math.min(1, this.game.totalSuspicion) * 100;
+    $("#suspicion").html(susp.toFixed(1));
 };
 
 GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
@@ -37,7 +36,6 @@ GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
 
     result.css("display", this.orderTemplateDisp);
     result.css("background-color", genRandomColor());
-    console.log(result.css("background-color"));
     var spans = result.find("span");
     spans.eq(0).html(template.name);
     spans.eq(1).html("" + (template.expiration / 10).toFixed(1) + "s");
@@ -100,9 +98,12 @@ GameLoop.prototype.createPayoutRow = function (target) {
     result.css("display", this.rowTemplateDisp);
     var tds = result.find("td");
     tds.eq(0).html(target.name);
-    tds.eq(1).html("$" + target.payout.toFixed(2));
-    tds.eq(2).html((target.suspicion * 100).toFixed(1) + "%");
-    tds.eq(3).html("Hmm I don't really have anything to say about this.");
+    tds.eq(1).html("$" + target.income.toFixed(2));
+    tds.eq(2).html(target.age);
+    tds.eq(3).html(target.dependents);
+    tds.eq(4).html("$" + target.payout.toFixed(2));
+    tds.eq(5).html((target.suspicion * 100).toFixed(1) + "%");
+    tds.eq(6).html("Hmm I don't really have anything to say about this.");
 
     $("#rowContainer").append(result);
     return result;
@@ -118,15 +119,3 @@ var genRandomColor = function () {
     }
     return result;
 };
-
-/*
-this.name = 
-this.description = 
-this.age = 
-this.health = 
-
-this.income = 
-this.dependents = 
-
-this.expiration =
-*/

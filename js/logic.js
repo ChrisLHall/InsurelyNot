@@ -62,7 +62,6 @@ Game.prototype.generateChar = function () {
         {
             // Instantiate this one
             var instance = new (Object.getPrototypeOf(thisChar).constructor)();
-            console.log(instance);
             return instance;
         } else {
             // Keep looking
@@ -79,7 +78,8 @@ Game.prototype.evaluate = function(target)
         return 0;
     }
     var adjusted = 0.0;
-    var bracket, best;
+    var totalTax = 0;
+    var bracket, myBracket;
     var inctax = 
     [
         {
@@ -121,27 +121,35 @@ Game.prototype.evaluate = function(target)
     for (var i = 0; i < inctax.length; i++)
     {
         bracket = inctax[i];
-        if (target.income >= bracket["lower"] && target.income <= bracket["upper"])
+        if (target.income >= bracket.lower && target.income <= bracket.upper)
         {
-            best = i;
+            totalTax += (target.income - bracket.lower) * bracket.tax;
             break;
+        } else if (target.income > bracket.upper) {
+            totalTax += (bracket.upper - bracket.lower) * bracket.tax;
         }
     }
 
-    for (var i = 0; i < best; i++)
-    {
-        adjusted += inctax[i]["upper"] * inctax[i]["tax"];
-    }
-    adjusted += (inctax[best]["upper"] - target.income) * inctax[best]["tax"]
-    adjusted += 25000 * target.dependents;
-    adjusted = Math.max(adjusted * (60 - target.age), 0.0); // how long you need the insurance
-    adjusted = adjusted * 0.5;
+    console.log(totalTax);
+    adjusted = target.income - totalTax;
 
-    if (Math.random() < 0.5)
+    // Burial expenses
+    var payout = 8000 + Math.random() * 1500;
+    // Years to cover
+    var yearsToCover = Math.min(30, Math.max(60 - target.age, 0));
+    // 0.8 is the fudge factor
+    payout += adjusted * 0.8 * yearsToCover;
+
+    // College funds
+    if (target.age < 60) {
+        payout += 69000 * target.dependents * Math.min(20, Math.max(0, 60 - target.age)) / 20;
+    }
+
+    if (Math.random() < Math.max(0, 0.4 - 0.1 * target.dependents))
     {
         return 0.0;
     }
-    return adjusted;
+    return payout;
 };
 
 Game.prototype.suspicion = function(target)
@@ -153,7 +161,8 @@ Game.prototype.suspicion = function(target)
     risk += (100.0 - target.age) / 800.0;
     risk += target.dependents / 30.0;
 
-    risk = Math.min(2.0 * Math.random() * risk, 1.0);
+    //risk = Math.min(2.0 * Math.random() * risk, 1.0);
+    risk *= 0.8 + 0.4 * Math.random();
 
     return risk;
 };
@@ -169,6 +178,8 @@ Game.prototype.update = function ()
     if (this.done) {
         return;
     }
+
+    this.totalSuspicion += 0.0005;
 
     this.counter++;
     for (var i = 0; i < this.targets.length; i++)
@@ -202,7 +213,8 @@ Game.prototype.accept = function (target) {
     gameloop.hideTarget(target);
     gameloop.createPayoutRow(target);
     this.totalPayout += target.payout;
-    if (Math.random() < target.suspicion) {
+    this.totalSuspicion += target.suspicion;
+    if (this.totalSuspicion >= 1) {
         this.done = true;
         gameloop.showGameOverText();
     }
