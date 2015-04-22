@@ -180,6 +180,14 @@ Game.prototype.update = function ()
     }
 
     this.totalSuspicion += 0.0005;
+    if (this.totalSuspicion >= 1) {
+        for (var i = 0; i < this.targets.length; i++)
+        {
+            gameloop.hideTarget(this.targets[i]);
+        }
+        this.done = true;
+        gameloop.showGameOverText();
+    }
 
     this.counter++;
     for (var i = 0; i < this.targets.length; i++)
