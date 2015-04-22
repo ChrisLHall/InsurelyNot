@@ -24,7 +24,11 @@ GameLoop.prototype.start = function (interval) {
 };
 
 GameLoop.prototype.updateStatus = function () {
-    $("#statusString").html("Time Elapsed: <b>" + (this.game.counter / 10).toFixed(1) + "</b>, Total Payout: <b>$" + this.game.totalPayout.toFixed(2) + "</b>");
+    var gameOverString = "";
+    if (this.game.done) {
+        gameOverString = "GAME OVER! ";
+    }
+    $("#statusString").html(gameOverString + "Time Elapsed: <b>" + (this.game.counter / 10).toFixed(1) + "</b>, Total Payout: <b>$" + this.game.totalPayout.toFixed(2) + "</b>");
     $("#suspicion").html(this.game.suspicion);
 };
 
@@ -68,16 +72,24 @@ GameLoop.prototype.hideTarget = function (target) {
     }
 };
 
+GameLoop.prototype.showGameOverText = function () {
+    $("#orderContainer").css("text-align", "left");
+    $("#orderContainer").css("padding", "10px");
+    $("#orderContainer").html("<span style='font-size: 4em;'>Game over! You got caught!</span>");
+}
+
 /** Use this function after a payout has been chosen. */
 GameLoop.prototype.createPayoutRow = function (target) {
     var result = this.rowTemplate.clone();
 
     result.css("display", this.rowTemplateDisp);
-    result.find("#name").html(target.name);
+    var tds = result.find("td");
+    tds.eq(0).html(target.name);
     result.find("#payout").html(target.payout);
     result.find("#suspicion").html(target.age);
     result.find("#comment").html("Hmm I don't really have anything to say about this.");
 
+    $("#rowContainer").append(result);
     return result;
 };
 
