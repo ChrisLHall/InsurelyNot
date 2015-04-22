@@ -32,13 +32,17 @@ GameLoop.prototype.createTarget = function (template) {
     var result = this.orderTemplate.clone();
 
     result.css("display", this.orderTemplateDisp);
-    result.find("#charName").html(template.name);
-    result.find("#charDesc").html(template.description);
-    result.find("#charAge").html(template.age);
-    result.find("#charIncome").html(template.income);
-    result.find("#charDeps").html(template.dependents);
-    result.find("#charTime").html(template.expiration / 10);
+    var spans = result.find("span");
+    spans.eq(0).html(template.name);
+    spans.eq(1).html("" + (template.expiration / 10) + "s");
+    spans.eq(2).html(template.description);
+    spans.eq(3).html("")
+    spans.eq(4).html(template.age);
+    spans.eq(5).html(template.income);
+    spans.eq(6).html(template.dependents);
+    spans.eq(7).html(template.expiration / 10);
 
+    $("#orderContainer").append(result);
     return result;
 };
 
@@ -47,7 +51,8 @@ GameLoop.prototype.updateTarget = function (target) {
     if (remaining < 0) {
         remaining = 0;
     }
-    target.find("#charTime").html(remaining / 10);
+    var spans = target.htmlInst.find("span");
+    spans.eq(1).text(remaining / 10);
 };
 
 GameLoop.prototype.hideTarget = function (target) {
