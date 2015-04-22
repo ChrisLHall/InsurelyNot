@@ -18,7 +18,7 @@
 	<div id="body">
         <p>You have an incurable hatred for life insurance companies due to an event in your past, and you want nothing more than to bleed them dry.</p>
         <p>Try to guess which targets have the most life insurance coverage, and click <b>Cash Out</b> to fake their deaths and force the insurance company to pay up. But watch out; the police are suspicious and will catch you, so hurry up!</p>
-        <h3><span id="statusString">Time: <b>00:00:02</b>, Total Payout: <b>$0</b></span></h3>
+        <h3><span id="statusString">Time Elapsed: <b>0.0</b>, Total Payout: <b>$0</b></span></h3>
         <div class="left">
             <div class="section">
                 <div class="article">
@@ -28,7 +28,7 @@
                     </p>
                     <p class="bigcenter"><b><span id="charName">Dyler Turden</span></b></p>
                     <p class="center">Cold-blooded "killer"</p>
-                    <p class="monospacecenter">Suspicion: <b><span id="suspicion">2.5%</span></b></p>
+                    <p class="monospacecenter">Suspicion: <b><span id="suspicion">2.5</span>%</b></p>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <div class="article">
                     <h2>Targets</h2>
                     <div class="orders">
-                        <div class="order">
+                        <div class="order" id="orderTemplate">
                         <h3><span class="charName">Grandma</span> (<span class="charTime">10</span>s)</h3>
                         <p><span class="charDesc">Grandma NO!</span> <b><span class="charProfile">(High Profile)</span></b></p>
                         <p><b>Age:</b> <span class="charAge">?</span></p>
@@ -59,7 +59,7 @@
                         <td class="payout"><b>Payout</b></td>
                         <td class="suspicion"><b>Suspicion</b></td>
                         <td class="comment"><b>Comment</b></td></tr>
-                        <tr><td class="name">Grandma</td>
+                        <tr id="templateRow"><td class="name">Grandma</td>
                         <td class="payout">$0</td>
                         <td class="suspicion">6%</td>
                         <td class="comment">MY KIDS ALREADY RETIRED WHY WOULD I HAVE INSURANCE?!</td></tr>

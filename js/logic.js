@@ -230,9 +230,13 @@ var Decisions =
 
 
 
-function Game()
+function Game(gameLoop)
 {
+    this.gameLoop = gameLoop;
     this.year = 0;
+    this.counter = 0;
+
+    this.totalPayout = 0;
 
     this.player = "name";
     this.image = "image";
@@ -288,6 +292,9 @@ function Game()
             this.targets.push(target)
         }
     }
+
+    // goes to 100
+    this.suspicion = 0;
 
     this.done = false; // whether the game is finished
 }
@@ -467,6 +474,14 @@ var Target =
         this.probability = 0.1;
     }
 };
+
+
+
+Game.prototype.update = function () {
+    this.counter++;
+};
+
+
 
 // print(new Target.OldLady());
  // This now done in gameloop.js
