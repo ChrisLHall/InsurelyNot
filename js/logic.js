@@ -260,7 +260,7 @@ function Game(gameLoop)
     this.characters = [new Target.OldLady(), new Target.DrugUser(), new Target.Student(), new Target.RichPerson(), new Target.PoliceOfficer(), new Target.Unemployed(), new Target.HomelessPerson()];
 
     // goes to 100
-    this.suspicion = 0;
+    // this.suspicion = 0;
 
     this.done = false; // whether the game is finished
 }
@@ -408,6 +408,26 @@ Game.prototype.evaluate = function(target)
     return adjusted;
 };
 
+Game.prototype.suspicion = function(target)
+{
+    var risk = 0.0;
+
+    risk += target.income / 1000000.0;
+    risk += target.value / 4000000.0;
+    risk += (100.0 - target.age) / 800.0;
+    risk += target.dependents / 30.0;
+
+    risk = Math.min(2.0 * Math.random() * risk, 1.0);
+
+    x = Math.random();
+    if (x > risk || risk == 1.0)
+    {
+        this.done = true;
+    }
+    this.done = false;
+    return risk;
+};
+
 Game.prototype.payoff = function(target)
 {
     return target.income;
@@ -424,21 +444,19 @@ Game.prototype.update = function ()
         if (this.targets.expiration <= 0)
         {
             this.targets.expiration = 0;
-            gameloop.hideTarget(target.htmlInst);
+            gameloop.hideTarget(target[i]);
         }
-        gameloop.updateTarget(target);
     }
 
     // Every 20 * 100 ms = 2 sec, create a new target;
     if (this.counter % 20 == 0) {
         var newTarget = this.generateChar();
-        this.instantiate(newTarget);
-        this.targets.push(newTarget);
+        this.instantiateHtml(newTarget);
     }
 };
 
-Game.prototype.instantiate = function (target) {
-    target.htmlInst = gameloop.createTarget(target);
+Game.prototype.instantiateHtml = function (target) {
+    target.instance = gameloop.createTarget(target);
     target.payoff = this.evaluate(target);
 };
 
@@ -449,7 +467,7 @@ var Target =
         this.name = "OldLady";
         this.description = "Your favorite harmless old lady.";
         this.age = 50 + Math.round(Math.random() * 50); // E(X) = 75
-        this.health = Math.min(1.0, 2.0 * 0.6 * Math.random());
+        this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
         this.value = 5000 * Math.round(Math.random() * 100); // E(X) = 250000
         this.income = 500 * Math.round(Math.random() * 100); // E(X) = 25000
@@ -491,40 +509,40 @@ var Target =
 
     RichPerson: function()
     {
-        // this.name = 
-        // this.description = 
-        // this.age = 
-        // this.health = 
+        this.name = "RichPerson";
+        this.description = "Somebody in the 1%. Down with the 1%.";
+        this.age = 69;
+        this.health = 0.69;
 
-        // this.value = 
-        // this.income = 
-        // this.dependents = 
+        this.value = 1000000
+        this.income = 200000
+        this.dependents = 5
 
-        // this.expiration = 
+        this.expiration = 100
         this.probability = 0.1;
     },
 
     PoliceOfficer: function()
     {
-        // this.name = 
-        // this.description = 
-        // this.age = 
-        // this.health = 
+        this.name = "PoliceOfficer";
+        this.description = "Got to have some diversity. Diversifyyy your bondsss.";
+        this.age = 30 + Math.round(40 * Math.random());
+        this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
-        // this.value = 
-        // this.income = 
-        // this.dependents = 
+        this.value = 6000 * Math.round(Math.random() * 100);
+        this.income = 1000 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(6 * Math.random());
 
-        // this.expiration = 
+        this.expiration = 100;
         this.probability = 0.1;
     },
 
     Unemployed: function()
     {
         this.name = "Unemployed";
-        this.description = "Someone without a job, who currently is looking";
+        this.description = "Someone without a job.";
         this.age = 20 + Math.round(50 * Math.random());
-        this.health = Math.min(1.0, 2.0 * 0.4 * Math.random());
+        this.health = Math.min(1.0, 2.0 * 0.6 * Math.random());
 
         this.value = 100 * Math.round(Math.random() * 100);
         this.income = 0.0;
@@ -536,16 +554,16 @@ var Target =
 
     HomelessPerson: function()
     {
-        // this.name = 
-        // this.description = 
-        // this.age = 
-        // this.health = 
+        this.name = "HomelessPerson";
+        this.description = "Doesn't have a home, but might be renting!"
+        this.age = 30 + Math.round(Math.random() * 20);
+        this.health = Math.min(1.0, 2.0 * 0.15 * Math.random());
 
-        // this.value = 
-        // this.income = 
-        // this.dependents = 
+        this.value = 10 * Math.round(Math.random() * 100);
+        this.income = 10 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(0.5 * Math.random());
 
-        // this.expiration = 
+        this.expiration = 100;
         this.probability = 0.1;
     }
 };
@@ -553,9 +571,9 @@ var Target =
 // print(new Target.OldLady());
  // This now done in gameloop.js
 Game = new Game();
-Game.evaluate(new Target.DrugUser());
 
-// console.log(Game)
+// x = Game.suspicion(new Target.DrugUser());
+// print(Game);
 
 
 
