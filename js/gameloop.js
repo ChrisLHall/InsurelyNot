@@ -26,7 +26,7 @@ GameLoop.prototype.updateStatus = function () {
     if (this.game.done) {
         gameOverString = "GAME OVER! ";
     }
-    $("#statusString").html(gameOverString + "Time Elapsed: <b>" + (this.game.counter / 10).toFixed(1) + "</b>, Total Payout: <b>$" + this.game.totalPayout.toFixed(2) + "</b>");
+    $("#statusString").html(gameOverString + "Time Elapsed: <b>" + (this.game.counter / 10).toFixed(1) + "</b>, Total Payout: <b>$" + this.game.totalPayout.toLocaleString() + "</b>");
     var susp = Math.min(1, this.game.totalSuspicion) * 100;
     $("#suspicion").html(susp.toFixed(1));
 };
@@ -57,7 +57,7 @@ GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
 
     spans.eq(3).html(string);
     spans.eq(4).html(genUnknownText(template.age, 0.1));
-    spans.eq(5).html(genUnknownText(template.income, 0.2));
+    spans.eq(5).html(genUnknownText("$" + template.income.toLocaleString(), 0.2));
     spans.eq(6).html(genUnknownText(template.dependents, 0.1));
     spans.eq(7).html(template.expiration / 10);
 
@@ -98,10 +98,10 @@ GameLoop.prototype.createPayoutRow = function (target) {
     result.css("display", this.rowTemplateDisp);
     var tds = result.find("td");
     tds.eq(0).html(target.name);
-    tds.eq(1).html("$" + target.income.toFixed(2));
+    tds.eq(1).html("$" + target.income.toLocaleString());
     tds.eq(2).html(target.age);
     tds.eq(3).html(target.dependents);
-    tds.eq(4).html("$" + target.payout.toFixed(2));
+    tds.eq(4).html("$" + target.payout.toLocaleString());
     tds.eq(5).html((target.suspicion * 100).toFixed(1) + "%");
     tds.eq(6).html(target.comment);
 
