@@ -253,7 +253,7 @@ var Target =
         this.dependents = Math.round(Math.random()); // E(X) = 0.5
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 2;
     },
 
     DrugUser: function()
@@ -285,7 +285,7 @@ var Target =
         this.dependents = Math.round(Math.random() * 0.7); // hack to get 2/7 chance of child
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 2;
     },
 
     RichPerson: function()
@@ -301,7 +301,7 @@ var Target =
         this.dependents = Math.floor(Math.random() * 3);
 
         this.expiration = TARGET_DURATION;
-        this.probability = 2;
+        this.probability = 1;
     },
 
     UpperMiddleClass: function()
