@@ -167,9 +167,10 @@ Game.prototype.suspicion = function(target)
     return risk;
 };
 
-Game.prototype.payoff = function(target)
+Game.prototype.chooseComment = function(target)
 {
-    return target.income;
+    var commentIndex = Math.floor(Math.random() * target.comments.length);
+    return target.comments[commentIndex];
 };
 
 
@@ -214,6 +215,7 @@ Game.prototype.update = function ()
 Game.prototype.instantiate = function (target) {
     target.payout = this.evaluate(target);
     target.suspicion = this.suspicion(target);
+    target.comment = this.chooseComment(target);
     target.htmlInst = gameloop.createTarget(target, this.accept.bind(this, target), this.reject.bind(this, target));
 };
 
@@ -240,8 +242,9 @@ var Target =
 {
     OldLady: function()
     {
-        this.name = "Old Lady";
+        this.name = "Adorable Old Lady";
         this.description = "Your favorite harmless old lady.";
+        this.comments = ["Young man, you're in trouble now.", "Do you have an oven here? I need to bake cookies for my grandchildren.", "Let me make you a scarf!"];
         this.age = 60 + Math.round(Math.random() * 40); // E(X) = 75
         this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
@@ -257,6 +260,7 @@ var Target =
     {
         this.name = "Drug Addict";
         this.description = "The typical town junkie, has unsanitary and unhealthy habits.";
+        this.comments = ["Wheeeeew you're insane, let me get some of that insurance money for that good kush and alcohol!", "I can't remember if I got insurance...what's insurance? Actually stop talking I'm too stoned", "Weeeeeeeeeeeeeeeeeeeeed", "Wait, where are we? Is this my house? Did I move recently?"];
         this.age = 20 + Math.round(Math.random() * 20);
         this.health = Math.min(1.0, 2.0 * 0.2 * Math.random());
 
@@ -272,6 +276,7 @@ var Target =
     {
         this.name = "Student";
         this.description = "A university student, trying to get some college by going to knowledge.";
+        this.comments = ["Oh thanks! Now I don't have to pay off all those student loans!", "My parents are going to be worried that I'm actually dead, when can I tell them?", "I should have done this earlier instead of going to college!", "I AM ENJOYING LEARNING ABOUT LIFE INSURANCE!"];
         this.age = 18 + Math.round(Math.random() * 5)
         this.health = Math.min(1.0, 2.0 * 0.9 * Math.random());
 
@@ -287,6 +292,7 @@ var Target =
     {
         this.name = "Rich Person";
         this.description = "Somebody in the 1%. Down with the 1%.";
+        this.comments = ["What the hell did you do that for?!? I was living a great life! I'm going to sue you!", "You do realize I could basically retire at any time right?", "Wait, I don't hate insurance companies! I own one!"];
         this.age = 50 + Math.round(Math.random() * 20);
         this.health = 0.69;
 
@@ -302,6 +308,7 @@ var Target =
     {
         this.name = "Upper Middle Class";
         this.description = "Not super rich, but doing very well financially.";
+        this.comments = ["Yeah I hate evil companies, but I was doing fine. This is such a pain!", "Woohoo! I thought I left my social justice days behind after college but this is great!", "Now that we're in hiding can you show me where the bathroom is?"];
         this.age = 35 + Math.round(Math.random() * 25);
         this.health = 1.5 * Math.random();
 
@@ -317,6 +324,7 @@ var Target =
     {
         this.name = "Average Person";
         this.description = "A normal middle class working individual.";
+        this.comments = ["Meh.", "Hmm I don't really have anything to say about this.", "Stick it to the man! Thanks for doing this Dyler Turden.", "Think of the children! I hope they aren't too worried."];
         this.age = 30 + Math.round(Math.random() * 20);
         this.health = 0.2 * Math.random();
 
@@ -332,6 +340,7 @@ var Target =
     {
         this.name = "Police Officer";
         this.description = "Did you hear about that life insurance fraud case?";
+        this.comments = ["Wow, they're never going to suspect I was in on this!", "I should arrest you right now.", "What the hell is wrong with you?! Oh wait mmm I like being rich though.", "This is soooooo morally ambiguous."];
         this.age = 25 + Math.round(40 * Math.random());
         this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
@@ -347,6 +356,7 @@ var Target =
     {
         this.name = "Unemployed";
         this.description = "Someone without a stable job. Occasionally works small jobs.";
+        this.comments = ["I can barely support myself! This is great.", "Wow, so I don't need to work anymore.", "Holy cow I hope the insurance payout is good, it's been a financial tough spot recently."]
         this.age = 20 + Math.round(50 * Math.random());
         this.health = Math.min(1.0, 2.0 * 0.6 * Math.random());
 
@@ -362,6 +372,7 @@ var Target =
     {
         this.name = "Homeless Person";
         this.description = "Doesn't have a home at the moment."
+        this.comments = ["New set of clothes weeeeeeeee", "Oh look I accidentally gambled it all away T.T", "Can I afford a place to live now?", "I did an experiment like this back when I was a professor at MIT, but I had to quit because they asked me to invent smartphones. Look where that got me."];
         this.age = 30 + Math.round(Math.random() * 20);
         this.health = Math.min(1.0, 2.0 * 0.15 * Math.random());
 
@@ -373,3 +384,4 @@ var Target =
         this.probability = 1;
     }
 };
+

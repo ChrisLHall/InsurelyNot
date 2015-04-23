@@ -103,7 +103,7 @@ GameLoop.prototype.createPayoutRow = function (target) {
     tds.eq(3).html(target.dependents);
     tds.eq(4).html("$" + target.payout.toFixed(2));
     tds.eq(5).html((target.suspicion * 100).toFixed(1) + "%");
-    tds.eq(6).html("Hmm I don't really have anything to say about this.");
+    tds.eq(6).html(target.comment);
 
     $("#rowContainer").append(result);
     return result;
