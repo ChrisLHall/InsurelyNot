@@ -39,7 +39,7 @@ function Game(gameLoop)
 
     this.targets = [];
 
-    this.characters = [new Target.OldLady(), new Target.DrugUser(), new Target.Student(), new Target.RichPerson(), new Target.PoliceOfficer(), new Target.Unemployed(), new Target.HomelessPerson()];
+    this.characters = [new Target.OldLady(), new Target.DrugUser(), new Target.Student(), new Target.RichPerson(), new Target.UpperMiddleClass(), new Target.AveragePerson(), new Target.PoliceOfficer(), new Target.Unemployed(), new Target.HomelessPerson()];
 
     // goes to 100
     this.totalSuspicion = 0;
@@ -212,9 +212,9 @@ Game.prototype.update = function ()
 };
 
 Game.prototype.instantiate = function (target) {
-    target.htmlInst = gameloop.createTarget(target, this.accept.bind(this, target), this.reject.bind(this, target));
     target.payout = this.evaluate(target);
     target.suspicion = this.suspicion(target);
+    target.htmlInst = gameloop.createTarget(target, this.accept.bind(this, target), this.reject.bind(this, target));
 };
 
 Game.prototype.accept = function (target) {
@@ -240,13 +240,13 @@ var Target =
 {
     OldLady: function()
     {
-        this.name = "OldLady";
+        this.name = "Old Lady";
         this.description = "Your favorite harmless old lady.";
-        this.age = 50 + Math.round(Math.random() * 50); // E(X) = 75
+        this.age = 60 + Math.round(Math.random() * 40); // E(X) = 75
         this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
-        this.value = 5000 * Math.round(Math.random() * 100); // E(X) = 250000
-        this.income = 500 * Math.round(Math.random() * 100); // E(X) = 25000
+        this.value = 300000 + 9000 * Math.round(Math.random() * 100);
+        this.income = 20000 + 300 * Math.round(Math.random() * 100); // E(X) = 25000
         this.dependents = Math.round(Math.random()); // E(X) = 0.5
 
         this.expiration = TARGET_DURATION;
@@ -255,17 +255,17 @@ var Target =
 
     DrugUser: function()
     {
-        this.name = "DrugUser";
+        this.name = "Drug Addict";
         this.description = "The typical town junkie, has unsanitary and unhealthy habits.";
         this.age = 20 + Math.round(Math.random() * 20);
         this.health = Math.min(1.0, 2.0 * 0.2 * Math.random());
 
-        this.value = 300 * Math.round(Math.random() * 100);
-        this.income = 300 * Math.round(Math.random() * 100);
-        this.dependents = Math.round(Math.random() * 4);
+        this.value = 3000 + 300 * Math.round(Math.random() * 100);
+        this.income = 10000 + 300 * Math.round(Math.random() * 100);
+        this.dependents = Math.floor(Math.random() * 3);
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 1;
     },
 
     Student: function()
@@ -275,9 +275,9 @@ var Target =
         this.age = 18 + Math.round(Math.random() * 5)
         this.health = Math.min(1.0, 2.0 * 0.9 * Math.random());
 
-        this.value = 50 * Math.round(Math.random() * 100);
-        this.income = 50 * Math.round(Math.random() * 100);
-        this.dependents = Math.round(Math.random() * 1);
+        this.value = 1000 + 50 * Math.round(Math.random() * 100);
+        this.income = 100 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(Math.random() * 0.7); // hack to get 2/7 chance of child
 
         this.expiration = TARGET_DURATION;
         this.probability = 0.1;
@@ -285,53 +285,83 @@ var Target =
 
     RichPerson: function()
     {
-        this.name = "RichPerson";
+        this.name = "Rich Person";
         this.description = "Somebody in the 1%. Down with the 1%.";
-        this.age = 69;
+        this.age = 50 + Math.round(Math.random() * 20);
         this.health = 0.69;
 
-        this.value = 1000000
-        this.income = 200000
-        this.dependents = 5
+        this.value = 1000000 + 50000 * Math.round(Math.random() * 100);
+        this.income = 500000 + 15000 * Math.round(Math.random() * 100);
+        this.dependents = Math.floor(Math.random() * 3);
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 2;
+    },
+
+    UpperMiddleClass: function()
+    {
+        this.name = "Upper Middle Class";
+        this.description = "Not super rich, but doing very well financially.";
+        this.age = 35 + Math.round(Math.random() * 25);
+        this.health = 1.5 * Math.random();
+
+        this.value = 400000 + 6000 * Math.round(Math.random() * 100);
+        this.income = 80000 + 1000 * Math.round(Math.random() * 100);
+        this.dependents = Math.floor(Math.random() * 4);
+
+        this.expiration = TARGET_DURATION;
+        this.probability = 3;
+    },
+
+    AveragePerson: function()
+    {
+        this.name = "Average Person";
+        this.description = "A normal middle class working individual.";
+        this.age = 30 + Math.round(Math.random() * 20);
+        this.health = 0.2 * Math.random();
+
+        this.value = 100000 + 800 * Math.round(Math.random() * 100);
+        this.income = 35000 + 500 * Math.round(Math.random() * 100);
+        this.dependents = Math.floor(Math.random() * 5);
+
+        this.expiration = TARGET_DURATION;
+        this.probability = 4;
     },
 
     PoliceOfficer: function()
     {
-        this.name = "PoliceOfficer";
-        this.description = "Got to have some diversity. Diversifyyy your bondsss.";
-        this.age = 30 + Math.round(40 * Math.random());
+        this.name = "Police Officer";
+        this.description = "Did you hear about that life insurance fraud case?";
+        this.age = 25 + Math.round(40 * Math.random());
         this.health = Math.min(1.0, 2.0 * 0.5 * Math.random());
 
-        this.value = 6000 * Math.round(Math.random() * 100);
-        this.income = 1000 * Math.round(Math.random() * 100);
-        this.dependents = Math.round(6 * Math.random());
+        this.value = 150000 + 2000 * Math.round(Math.random() * 100);
+        this.income = 60000 + 600 * Math.round(Math.random() * 100);
+        this.dependents = Math.round(4 * Math.random());
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 1;
     },
 
     Unemployed: function()
     {
         this.name = "Unemployed";
-        this.description = "Someone without a job.";
+        this.description = "Someone without a stable job. Occasionally works small jobs.";
         this.age = 20 + Math.round(50 * Math.random());
         this.health = Math.min(1.0, 2.0 * 0.6 * Math.random());
 
-        this.value = 100 * Math.round(Math.random() * 100);
-        this.income = 0.0;
+        this.value = 5000 + 100 * Math.round(Math.random() * 100);
+        this.income = 1000 + 100 * Math.round(Math.random() * 100);
         this.dependents = Math.round(4 * Math.random());
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 2;
     },
 
     HomelessPerson: function()
     {
-        this.name = "HomelessPerson";
-        this.description = "Doesn't have a home, but might be renting!"
+        this.name = "Homeless Person";
+        this.description = "Doesn't have a home at the moment."
         this.age = 30 + Math.round(Math.random() * 20);
         this.health = Math.min(1.0, 2.0 * 0.15 * Math.random());
 
@@ -340,6 +370,6 @@ var Target =
         this.dependents = Math.round(0.5 * Math.random());
 
         this.expiration = TARGET_DURATION;
-        this.probability = 0.1;
+        this.probability = 1;
     }
 };

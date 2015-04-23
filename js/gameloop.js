@@ -44,21 +44,21 @@ GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
     var string;
     if (template.suspicion < 0.1)
     {
-        string = "Nobody cares about this target. Just kill them already.";
+        string = "Nobody will notice if this target disappears.";
     }
-    else if (template.suspicion > 0.3)
+    else if (template.suspicion < 0.3)
     {
-        string = "Meh. You could get away it. Wanna take a chance?";
+        string = "This target's disappearance will be slightly suspicious.";
     }
     else
     {
-        string = "There's a high chance you'll be caught if you try killing this target.";
+        string = "Faking this target's death will be very suspicious.";
     }
 
     spans.eq(3).html(string);
-    spans.eq(4).html(template.age);
-    spans.eq(5).html(template.income);
-    spans.eq(6).html(template.dependents);
+    spans.eq(4).html(genUnknownText(template.age, 0.1));
+    spans.eq(5).html(genUnknownText(template.income, 0.2));
+    spans.eq(6).html(genUnknownText(template.dependents, 0.1));
     spans.eq(7).html(template.expiration / 10);
 
     var buttons = result.find("input");
@@ -119,3 +119,10 @@ var genRandomColor = function () {
     }
     return result;
 };
+
+var genUnknownText = function (text, chanceOfUnknown) {
+    if (Math.random() < chanceOfUnknown) {
+        return "???";
+    }
+    return text;
+}
