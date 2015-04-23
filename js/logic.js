@@ -130,7 +130,6 @@ Game.prototype.evaluate = function(target)
         }
     }
 
-    console.log(totalTax);
     adjusted = target.income - totalTax;
 
     // Burial expenses
