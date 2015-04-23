@@ -317,7 +317,7 @@ var Target =
         this.dependents = Math.floor(Math.random() * 4);
 
         this.expiration = TARGET_DURATION;
-        this.probability = 3;
+        this.probability = 2;
     },
 
     AveragePerson: function()
@@ -333,7 +333,7 @@ var Target =
         this.dependents = Math.floor(Math.random() * 5);
 
         this.expiration = TARGET_DURATION;
-        this.probability = 4;
+        this.probability = 3;
     },
 
     PoliceOfficer: function()
