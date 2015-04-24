@@ -38,7 +38,8 @@ GameLoop.prototype.createTarget = function (template, acceptFunc, rejectFunc) {
     result.css("background-color", genRandomColor());
     var spans = result.find("span");
     spans.eq(0).html(template.name);
-    spans.eq(1).html("" + (template.expiration / 10).toFixed(1) + "s");
+    // No more expiration
+    //spans.eq(1).html("" + (template.expiration / 10).toFixed(1) + "s");
     spans.eq(2).html(template.description);
 
     var string;
@@ -74,8 +75,9 @@ GameLoop.prototype.updateTarget = function (target) {
     if (remaining < 0) {
         remaining = 0;
     }
-    var spans = target.htmlInst.find("span");
-    spans.eq(1).text((remaining / 10).toFixed(1));
+    // no more expiration
+    // var spans = target.htmlInst.find("span");
+    // spans.eq(1).text((remaining / 10).toFixed(1));
 };
 
 GameLoop.prototype.hideTarget = function (target) {

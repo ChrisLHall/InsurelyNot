@@ -194,11 +194,14 @@ Game.prototype.update = function ()
     {
         var target = this.targets[i];
         target.expiration--;
+        // No more expiration
+        /*
         if (target.expiration <= 0)
         {
             target.expiration = 0;
             gameloop.hideTarget(target);
         }
+        */
         gameloop.updateTarget(target);
     }
 
@@ -207,7 +210,8 @@ Game.prototype.update = function ()
         var newTarget = this.generateChar();
         this.instantiate(newTarget);
         this.targets.push(newTarget);
-        this.spawnCount = 0;
+        // No more expiration
+        //this.spawnCount = 0;
     }
 };
 
